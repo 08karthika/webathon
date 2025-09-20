@@ -1,0 +1,25 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+export default function Complaints() {
+  const [complaints, setComplaints] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/complaints").then(res => setComplaints(res.data));
+  }, []);
+
+  return (
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Complaints</h1>
+      <ul>
+        {complaints.map(c => (
+          <li key={c._id} className="border p-3 mb-2 rounded shadow">
+            <h2 className="font-bold">{c.title}</h2>
+            <p>{c.description}</p>
+            <span className="text-sm text-gray-600">Status: {c.status}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
